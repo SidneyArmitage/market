@@ -4,7 +4,6 @@ extern crate dotenv;
 
 pub mod schema;
 pub mod model;
-pub mod server;
 
 
 use diesel::data_types::Cents;
@@ -12,7 +11,8 @@ use diesel::prelude::*;
 use diesel::pg::PgConnection;
 use dotenv::dotenv;
 use std::env;
-use self::model::{Entry, NewEntry, Company, NewCompany};
+use chrono::NaiveDate;
+use self::model::{Entry, NewEntry, Company, NewCompany, NewIndustry};
 
 pub fn establish_connection() -> PgConnection {
   dotenv().ok();
@@ -41,15 +41,38 @@ pub fn create_entry (conn: &PgConnection, company: i32, is_buy: bool, price: Cen
     .expect("Error saving new entry");
 }
 
-pub fn create_company (conn: &PgConnection, name: String) -> Company {
+pub fn create_company (conn: &PgConnection, name: String, shares: i32) -> Company {
   use schema::company;
 
   let new_company = NewCompany {
     name: name,
+    dividend: NaiveDate::from_num_days_from_ce(0),
+    shares: shares
   };
 
   return diesel::insert_into(company::table)
     .values(&new_company)
     .get_result(conn)
     .expect("Error saving new company");
+}
+
+pub fn create_industry (conn: &PgConnection, name: String, beta: f64) {
+  use schema::industry;
+
+  let new_industry = NewIndustry {
+    name: name,
+    beta: beta,
+  };
+
+  diesel::insert_into(industry::table)
+    .values(&new_industry)
+    .execute(conn)
+    .expect("Error saving new industry");
+}
+
+pub fn clear_industry (conn: &PgConnection) {
+  use schema::industry;
+  diesel::delete(industry::table)
+    .execute(conn)
+    .expect("Error clearing industry");
 }

@@ -4,5 +4,6 @@ CREATE TABLE dividend (
   payment_date DATE NOT NULL,
   announcement_date DATE NOT NULL,
   exdividend_date DATE NOT NULL,
-  dividend MONEY NOT NULL
+  dividend MONEY NOT NULL,
+  PRIMARY KEY (company, payment_date)
 )

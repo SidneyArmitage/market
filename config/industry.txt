@@ -1,0 +1,96 @@
+Name	Beta
+Advertising	1.44
+Aerospace/Defense	1.23
+Air Transport	1.44
+Apparel	1.06
+Auto & Truck	1.1
+Auto Parts	1.21
+Bank (Money Center)	1
+Banks (Regional)	0.57
+Beverage (Alcoholic)	1.13
+Beverage (Soft)	1.22
+Broadcasting	1.21
+Brokerage & Investment Banking	1.46
+Building Materials	1.23
+Business & Consumer Services	1.07
+Cable TV	1.11
+Chemical (Basic)	1.37
+Chemical (Diversified)	1.85
+Chemical (Specialty)	1.14
+Coal & Related Energy	1.4
+Computer Services	1.2
+Computers/Peripherals	1.75
+Construction Supplies	1.36
+Diversified	1.4
+Drugs (Biotechnology)	1.43
+Drugs (Pharmaceutical)	1.36
+Education	1.61
+Electrical Equipment	1.44
+Electronics (Consumer & Office)	1.28
+Electronics (General)	1.15
+Engineering/Construction	1.6
+Entertainment	1.33
+Environmental & Waste Services	1.27
+Farming/Agriculture	0.89
+Financial Svcs. (Non-bank & Insurance	0.73
+Food Processing	0.88
+Food Wholesalers	0.87
+Furn/Home Furnishings	1.08
+Green & Renewable Energy	1.07
+Healthcare Products	1.04
+Healthcare Support Services	1.17
+Heathcare Information and Technology	1.24
+Homebuilding	0.83
+Hospitals/Healthcare Facilities	1.22
+Hotel/Gaming	1.26
+Household Products	1.03
+Information Services	1.09
+Insurance (General)	0.74
+Insurance (Life)	1.08
+Insurance (Prop/Cas.)	0.68
+Investments & Asset Management	1.03
+Machinery	1.25
+Metals & Mining	1.31
+Office Equipment & Services	1.65
+Oil/Gas (Integrated)	1.3
+Oil/Gas (Production and Exploration)	1.48
+Oil/Gas Distribution	1.02
+Oilfield Svcs/Equip.	1.58
+Packaging & Container	0.99
+Paper/Forest Products	1.54
+Power	0.58
+Precious Metals	1.44
+Publishing & Newspapers	1.07
+R.E.I.T.	0.68
+Real Estate (Development)	1.24
+Real Estate (General/Diversified)	1.63
+Real Estate (Operations & Services)	0.93
+Recreation	0.9
+Reinsurance	0.82
+Restaurant/Dining	0.97
+Retail (Automotive)	1.33
+Retail (Building Supply)	1.36
+Retail (Distributors)	1.28
+Retail (General)	1.14
+Retail (Grocery and Food)	0.59
+Retail (Online)	1.23
+Retail (Special Lines)	1.03
+Rubber& Tires	0.98
+Semiconductor	1.29
+Semiconductor Equip	1.28
+Shipbuilding & Marine	2.17
+Shoe	0.87
+Software (Entertainment)	1.29
+Software (Internet)	1.67
+Software (System & Application)	1.2
+Steel	1.62
+Telecom (Wireless)	1.14
+Telecom. Equipment	0.89
+Telecom. Services	1.05
+Tobacco	1.68
+Transportation	1.31
+Transportation (Railroads)	2.24
+Trucking	1.37
+Utility (General)	0.28
+Utility (Water)	0.68
+Total Market	1.0
