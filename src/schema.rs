@@ -4,6 +4,8 @@ table! {
         name -> Varchar,
         dividend -> Date,
         shares -> Int4,
+        alpha -> Float8,
+        stdev -> Float8,
     }
 }
 
@@ -13,29 +15,31 @@ table! {
         payment_date -> Date,
         announcement_date -> Date,
         exdividend_date -> Date,
-        #[sql_name = "dividend"]
-        div -> Money,
+        payment -> Money,
     }
 }
 
 table! {
     industry (id) {
-        beta -> Float8,
-        name -> Varchar,
         id -> Int4,
+        name -> Varchar,
+        beta -> Float8,
+        stdev -> Float8,
     }
 }
 
 table! {
-    industry_map (company) {
+    industry_map (industry, company) {
+        industry -> Int4,
         company -> Int4,
         beta -> Float8,
-        industry -> Int4,
+        weight -> Float8,
     }
 }
 
 table! {
-    industry_value (date) {
+    industry_value (industry, date) {
+        industry -> Int4,
         date -> Date,
         value -> Float8,
     }
@@ -54,6 +58,8 @@ table! {
 
 joinable!(dividend -> company (company));
 joinable!(industry_map -> company (company));
+joinable!(industry_map -> industry (industry));
+joinable!(industry_value -> industry (industry));
 joinable!(ledger -> company (company));
 
 allow_tables_to_appear_in_same_query!(

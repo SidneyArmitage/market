@@ -30,6 +30,8 @@ pub struct Company {
   pub name: String,
   pub dividend: NaiveDate,
   pub shares: i32,
+  pub alpha: f64,
+  pub stdev: f64,
 }
 
 #[derive(Insertable)]
@@ -38,6 +40,8 @@ pub struct NewCompany {
   pub name: String,
   pub dividend: NaiveDate,
   pub shares: i32,
+  pub alpha: f64,
+  pub stdev: f64,
 }
 
 #[derive(Queryable)]
@@ -45,6 +49,7 @@ pub struct Industry {
   pub id: i32,
   pub name: String,
   pub beta: f64,
+  pub stdev: f64,
 }
 
 #[derive(Insertable)]
@@ -52,4 +57,5 @@ pub struct Industry {
 pub struct NewIndustry {
   pub name: String,
   pub beta: f64,
+  pub stdev: f64,
 }

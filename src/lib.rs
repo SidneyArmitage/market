@@ -4,6 +4,7 @@ extern crate dotenv;
 
 pub mod schema;
 pub mod model;
+pub mod util;
 
 
 use diesel::data_types::Cents;
@@ -12,7 +13,7 @@ use diesel::pg::PgConnection;
 use dotenv::dotenv;
 use std::env;
 use chrono::NaiveDate;
-use self::model::{Entry, NewEntry, Company, NewCompany, NewIndustry};
+use self::model::{Entry, NewEntry, Company, NewCompany, NewIndustry, Industry};
 
 pub fn establish_connection() -> PgConnection {
   dotenv().ok();
@@ -41,13 +42,15 @@ pub fn create_entry (conn: &PgConnection, company: i32, is_buy: bool, price: Cen
     .expect("Error saving new entry");
 }
 
-pub fn create_company (conn: &PgConnection, name: String, shares: i32) -> Company {
+pub fn create_company (conn: &PgConnection, name: String, shares: i32, alpha: f64, stdev: f64) -> Company {
   use schema::company;
 
   let new_company = NewCompany {
     name: name,
     dividend: NaiveDate::from_num_days_from_ce(0),
-    shares: shares
+    shares: shares,
+    alpha: alpha,
+    stdev: stdev, 
   };
 
   return diesel::insert_into(company::table)
@@ -56,12 +59,13 @@ pub fn create_company (conn: &PgConnection, name: String, shares: i32) -> Compan
     .expect("Error saving new company");
 }
 
-pub fn create_industry (conn: &PgConnection, name: String, beta: f64) {
+pub fn create_industry (conn: &PgConnection, name: String, beta: f64, stdev: f64) {
   use schema::industry;
 
   let new_industry = NewIndustry {
     name: name,
     beta: beta,
+    stdev: stdev,
   };
 
   diesel::insert_into(industry::table)
@@ -75,4 +79,11 @@ pub fn clear_industry (conn: &PgConnection) {
   diesel::delete(industry::table)
     .execute(conn)
     .expect("Error clearing industry");
+}
+
+pub fn fetch_industries(conn: &PgConnection) -> std::vec::Vec<model::Industry> {
+  use schema::industry::dsl::*;
+  return industry.filter(name.ne("Total Market"))
+    .load::<Industry>(conn)
+    .expect("Error fetching industries");
 }

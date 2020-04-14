@@ -21,7 +21,8 @@ fn main() {
       println!("{}", line);
       let name = String::from(elements[0]);
       let beta = elements[1].parse::<f64>().unwrap();
-      let _company = create_industry(&connection, name, beta);
+      let stdev = elements[2].parse::<f64>().unwrap();
+      let _company = create_industry(&connection, name, beta, stdev);
   }
   // load industries from config file
   // load company names

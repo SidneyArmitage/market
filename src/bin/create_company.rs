@@ -10,5 +10,5 @@ fn main() {
   let mut name = String::new();
   stdin().read_line(&mut name).unwrap();
   let name = name.trim_end();
-  let _company = create_company(&connection, name.to_string());
+  let _company = create_company(&connection, name.to_string(), 0, 0.0, 0.0);
 }

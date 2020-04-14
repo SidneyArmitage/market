@@ -1,0 +1,19 @@
+Market Sim:
+  ☐ shocks
+  Agents:
+    ☐ buy profitable
+    Buy:
+      ☐ spot
+      ☐ ledger
+    Sell:
+      ☐ spot
+      ☐ ledger
+  Market Webserver:
+    Ledger:
+      ☐ add
+      ☐ remove
+      ☐ buy
+      ☐ sell
+    Company:
+      ☐ dividend
+      ☐ history
