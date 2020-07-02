@@ -2,36 +2,47 @@ extern crate market;
 extern crate diesel;
 extern crate rand;
 
-use std::fs;
 use std::env;
 use rand::Rng;
+use chrono::NaiveDate;
 
 use self::market::*;
+use self::market::util::*;
 
 fn main() {
   let mut rng = rand::thread_rng();
   let connection = establish_connection();
-  // load names
-  let filename = env::var("COMPANY_FILE")
-  .expect("COMPANY_FILE must be set");
-  let contents = fs::read_to_string(filename)
-    .expect("Unable to read file");
-  let names: Vec<&str>  = contents.split("\n\r").collect();
   // load industries
   let mut industries = fetch_industries(&connection);
-  let amount= names.len() / industries.len();
-  let mut current = industries.pop();
-  let mut count = 0;
+  let amount = industries.len();
+  let mut gaussian = market::util::random::create_gaussian();
+  let close = 3.090;
+  let deviation = 0.5 / close;
   // split companies between each industry
-  for name in names {
-    create_company(&connection, name.to_string(), rng.gen_range(100_000, 100_000_000), 0.0, 0.0);
-    count += 1;
-    if(amount == count) {
-      current = industries.pop();
+  for x in 65u8..90u8 {
+    for y in 65u8..90u8 {
+      for z in 65u8..90u8 {
+        let initialDividend = NaiveDate::from_num_days_from_ce(rng.gen_range(0, 365));
+        let company = create_company(&connection, format!("{}{}{}", x as char, y as char, z as char), rng.gen_range(100_000, 100_000_000), gaussian.generate(1.0, 0.25), initialDividend);
+        // initial dividend
+        create_dividend(&connection, company.id, initialDividend, gaussian.generate(0.1f64, 0.1f64));
+        let mut weights: Vec<f64> = vec![0f64; amount];
+        let mut sum: f64 = 0f64;
+        // link segments
+        for i in 0..amount {
+          let mut weight = gaussian.generate(0f64, deviation);
+          if weight < 0.0 {
+            weight = 1f64 - weight;
+          }
+          sum += weight;
+          weights.push(weight);
+        }
+        for i in weights {
+          let beta = gaussian.generate(1.04, 0.1);
+          let weight = i / sum;
+        }
+      }
     }
   }
-  // random alpha
-  // random std dev
-  // create dividend
   // create link for industry map
 }

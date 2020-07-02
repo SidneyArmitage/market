@@ -3,6 +3,8 @@ use chrono::NaiveDate;
 use super::schema::ledger;
 use super::schema::company;
 use super::schema::industry;
+use super::schema::industry_map;
+use super::schema::dividend;
 
 #[derive(Queryable)]
 pub struct Entry {
@@ -30,7 +32,6 @@ pub struct Company {
   pub name: String,
   pub dividend: NaiveDate,
   pub shares: i32,
-  pub alpha: f64,
   pub stdev: f64,
 }
 
@@ -40,7 +41,6 @@ pub struct NewCompany {
   pub name: String,
   pub dividend: NaiveDate,
   pub shares: i32,
-  pub alpha: f64,
   pub stdev: f64,
 }
 
@@ -58,4 +58,25 @@ pub struct NewIndustry {
   pub name: String,
   pub beta: f64,
   pub stdev: f64,
+}
+
+#[derive(Queryable)]
+#[derive(Insertable)]
+#[table_name="dividend"]
+pub struct Dividend {
+  pub company: i32,
+  pub payment_date: NaiveDate,
+  pub announcement_date: NaiveDate,
+  pub exdividend_date: NaiveDate,
+  pub payment: f64,
+}
+
+#[derive(Queryable)]
+#[derive(Insertable)]
+#[table_name="industry_map"]
+pub struct Industry_Map {
+  pub industry: i32,
+  pub company: i32,
+  pub beta: f64,
+  pub weight: f64,
 }

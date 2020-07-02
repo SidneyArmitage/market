@@ -4,12 +4,12 @@ use rand::Rng;
 use rand::rngs::*;
 use std::f64;
 
-pub struct GenerateGassian {
+pub struct GenerateGaussian {
   spare: f64,
   rng: ThreadRng,
 }
 
-impl GenerateGassian {
+impl GenerateGaussian {
 
   pub fn generate(&mut self, mean: f64, std: f64) ->f64 {
     if self.spare != 0.0 {
@@ -31,11 +31,33 @@ impl GenerateGassian {
   }
 }
 
+pub fn create_gaussian () -> GenerateGaussian {
+  return GenerateGaussian {
+    spare: 0.0,
+    rng: rand::thread_rng(),
+  };
+}
+
+pub fn generate (rng: &mut GenerateGaussian, a: f64) -> f64 {
+  let u0 = rng.generate(0.0, 1.0);
+  let v = rng.generate(0.0, 1.0);
+  let d = a / (1.0 + a * a).sqrt();
+  let u1 = d * u0 + (1.0 - d * d).sqrt() * v;
+  if u0 >= 1.0 {
+    println!("{} {} {} {}", u0, v, d, u1);
+    return u1;
+  } else {
+    println!("{} {} {} {}", u0, v, d, -u1);
+    return -u1;
+  }
+}
+
+
 #[test]
 fn test_Nrand() {
   let mut rng = rand::thread_rng();
 
-  let mut gen = GenerateGassian {
+  let mut gen = GenerateGaussian {
     spare: 0.0,
     rng: rng,
   };

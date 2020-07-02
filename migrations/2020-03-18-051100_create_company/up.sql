@@ -4,6 +4,5 @@ CREATE TABLE company (
   name VARCHAR NOT NULL,
   dividend DATE NOT NULL,
   shares INTEGER NOT NULL,
-  alpha FLOAT NOT NULL,
   stdev FLOAT NOT NULL
 )

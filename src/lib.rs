@@ -13,7 +13,7 @@ use diesel::pg::PgConnection;
 use dotenv::dotenv;
 use std::env;
 use chrono::NaiveDate;
-use self::model::{Entry, NewEntry, Company, NewCompany, NewIndustry, Industry};
+use self::model::{Entry, NewEntry, Company, NewCompany, NewIndustry, Industry, Dividend, Industry_Map};
 
 pub fn establish_connection() -> PgConnection {
   dotenv().ok();
@@ -42,14 +42,13 @@ pub fn create_entry (conn: &PgConnection, company: i32, is_buy: bool, price: Cen
     .expect("Error saving new entry");
 }
 
-pub fn create_company (conn: &PgConnection, name: String, shares: i32, alpha: f64, stdev: f64) -> Company {
+pub fn create_company (conn: &PgConnection, name: String, shares: i32, stdev: f64, initialDividend: NaiveDate) -> Company {
   use schema::company;
 
   let new_company = NewCompany {
     name: name,
-    dividend: NaiveDate::from_num_days_from_ce(0),
+    dividend: initialDividend,
     shares: shares,
-    alpha: alpha,
     stdev: stdev, 
   };
 
@@ -57,6 +56,22 @@ pub fn create_company (conn: &PgConnection, name: String, shares: i32, alpha: f6
     .values(&new_company)
     .get_result(conn)
     .expect("Error saving new company");
+}
+
+pub fn create_dividend(conn: &PgConnection, company: i32, date: NaiveDate, payment: f64) {
+  use schema::dividend;
+  let new_dividend = Dividend {
+    announcement_date: NaiveDate::from_num_days_from_ce(0),
+    company: company,
+    exdividend_date: NaiveDate::from_num_days_from_ce(0),
+    payment_date: date,
+    payment: payment
+  };
+
+  diesel::insert_into(dividend::table)
+    .values(&new_dividend)
+    .execute(conn)
+    .expect("Error saving new Dividend");
 }
 
 pub fn create_industry (conn: &PgConnection, name: String, beta: f64, stdev: f64) {
@@ -72,6 +87,21 @@ pub fn create_industry (conn: &PgConnection, name: String, beta: f64, stdev: f64
     .values(&new_industry)
     .execute(conn)
     .expect("Error saving new industry");
+}
+
+pub fn create_industry_map (conn: &PgConnection, industry: i32, company: i32, beta: f64, weight: f64) {
+  use schema::industry_map;
+  let new_industry_map = Industry_Map {
+    industry: industry,
+    company: company,
+    beta: beta,
+    weight: weight,
+  };
+  
+  diesel::insert_into(industry_map::table)
+    .values(&new_industry_map)
+    .execute(conn)
+    .expect("Error saving new industry mapping");
 }
 
 pub fn clear_industry (conn: &PgConnection) {

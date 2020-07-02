@@ -4,7 +4,6 @@ table! {
         name -> Varchar,
         dividend -> Date,
         shares -> Int4,
-        alpha -> Float8,
         stdev -> Float8,
     }
 }
@@ -15,7 +14,7 @@ table! {
         payment_date -> Date,
         announcement_date -> Date,
         exdividend_date -> Date,
-        payment -> Money,
+        payment -> Float8,
     }
 }
 
