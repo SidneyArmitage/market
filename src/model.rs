@@ -74,7 +74,7 @@ pub struct Dividend {
 #[derive(Queryable)]
 #[derive(Insertable)]
 #[table_name="industry_map"]
-pub struct Industry_Map {
+pub struct IndustryMap {
   pub industry: i32,
   pub company: i32,
   pub beta: f64,

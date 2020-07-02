@@ -13,7 +13,7 @@ fn main() {
   // use market::schema::ledger::dsl::*;
   // use market::schema::company::dsl::*;
   
-  let connection = establish_connection();
+  let connection = connector::establish_connection();
   let mut input = String::new();
   let mut count_c = 0;
   let length_c = company::dsl::company.select(count_star())

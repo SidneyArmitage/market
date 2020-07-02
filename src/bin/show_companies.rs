@@ -10,7 +10,7 @@ use std::io::{stdin};
 fn main() {
   use market::schema::company::dsl::*;
 
-  let connection = establish_connection();
+  let connection = connector::establish_connection();
   let mut input = String::new();
   let mut count = 0;
   let length = company.select(count_star())
