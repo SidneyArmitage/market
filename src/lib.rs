@@ -6,3 +6,4 @@ pub mod schema;
 pub mod model;
 pub mod util;
 pub mod connector;
+pub mod initialize;
