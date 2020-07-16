@@ -6,8 +6,9 @@ use super::super::model::{Industry, NewIndustry};
 use super::super::schema::industry;
 
 pub mod map;
+pub mod value;
 
-pub fn create (conn: &PgConnection, name: String, beta: f64, stdev: f64) {
+pub fn create (conn: &PgConnection, name: String, beta: f64, stdev: f64) -> Industry {
 
   let new_industry = NewIndustry {
     name: name,
@@ -15,10 +16,10 @@ pub fn create (conn: &PgConnection, name: String, beta: f64, stdev: f64) {
     stdev: stdev,
   };
 
-  diesel::insert_into(industry::table)
+  return diesel::insert_into(industry::table)
     .values(&new_industry)
-    .execute(conn)
-    .expect("Error saving new industry");
+    .get_result(conn)
+    .expect("Failed to create Industry");
 }
 
 
@@ -28,9 +29,16 @@ pub fn clear (conn: &PgConnection) {
     .expect("Error clearing industry");
 }
 
-pub fn fetch (conn: &PgConnection) -> std::vec::Vec<Industry> {
+pub fn fetch_all (conn: &PgConnection) -> std::vec::Vec<Industry> {
   use super::super::schema::industry::dsl::*;
   return industry.filter(name.ne("Total Market"))
     .load::<Industry>(conn)
     .expect("Error fetching industries");
+}
+
+pub fn fetch_total (conn: &PgConnection) -> Industry {
+  use super::super::schema::industry::dsl::*;
+  return industry.filter(name.eq("Total Market"))
+    .first::<Industry>(conn)
+    .expect("Unable to find market");
 }

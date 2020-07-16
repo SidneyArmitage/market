@@ -4,6 +4,7 @@ use super::schema::ledger;
 use super::schema::company;
 use super::schema::industry;
 use super::schema::industry_map;
+use super::schema::industry_value;
 use super::schema::dividend;
 
 #[derive(Queryable)]
@@ -79,4 +80,13 @@ pub struct IndustryMap {
   pub company: i32,
   pub beta: f64,
   pub weight: f64,
+}
+
+#[derive(Queryable)]
+#[derive(Insertable)]
+#[table_name="industry_value"]
+pub struct IndustryValue {
+  pub industry: i32,
+  pub date: NaiveDate,
+  pub value: f64,
 }
