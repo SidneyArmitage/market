@@ -52,7 +52,6 @@ pub fn generate (rng: &mut GenerateGaussian, a: f64) -> f64 {
   }
 }
 
-
 #[test]
 fn test_Nrand() {
   let mut rng = rand::thread_rng();

@@ -5,8 +5,8 @@ use super::section;
 
 
 pub fn load (address: &str) -> section::Root {
-  let file = File::open(address)
-    .expect("File does not exist");
+    let file = File::open(address)
+      .expect("File does not exist");
   let mut root = section::init();
   let lines_wrapper = io::BufReader::new(file)
     .lines();
@@ -49,7 +49,7 @@ fn read (lines: &mut Vec<String>, spaces: usize, object: &mut section::Root, han
 fn test_read() {
   let obj = section::init();
   read([
-    "save:",
+    "session:",
     "  date: 1"
   ], 0, &obj, section::root);
   assert_eq!(obj.save.date, 1)
