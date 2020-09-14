@@ -6,7 +6,6 @@ use rand::Rng;
 
 use super::connector::industry;
 use super::connector::company;
-use super::connector::dividend;
 use super::util::random;
 
 // initialize industries
@@ -47,7 +46,7 @@ pub fn companies(conn: &PgConnection) {
         let initial_dividend = NaiveDate::from_num_days_from_ce(rng.gen_range(0, 365));
         let current = company::create(conn, format!("{}{}{}", x as char, y as char, z as char), rng.gen_range(100_000, 100_000_000), gaussian.generate(1.0, 0.25), initial_dividend);
         // initial dividend
-        dividend::create(conn, current.id, initial_dividend, zero, zero, gaussian.generate(0.1f64, 0.1f64));
+        company::dividend::create(conn, current.id, initial_dividend, zero, zero, gaussian.generate(0.1f64, 0.1f64));
         let mut weights: Vec<f64> = vec![0f64; amount];
         let mut sum: f64 = 0f64;
         // link segments

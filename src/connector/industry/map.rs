@@ -18,3 +18,11 @@ pub fn create (conn: &PgConnection, industry: i32, company: i32, beta: f64, weig
     .execute(conn)
     .expect("Error saving new industry mapping");
 }
+
+pub fn fetch_from_company(conn: &PgConnection, id: i32) -> std::vec::Vec<IndustryMap> {
+  use super::super::super::schema::industry_map::dsl::*;
+  return industry_map
+    .filter(company.eq(id))
+    .load::<IndustryMap>(conn)
+    .expect("unable to fetch industry");
+}

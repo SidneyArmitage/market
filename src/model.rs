@@ -6,6 +6,7 @@ use super::schema::industry;
 use super::schema::industry_map;
 use super::schema::industry_value;
 use super::schema::dividend;
+use super::schema::projected_dividend;
 
 #[derive(Queryable)]
 pub struct Entry {
@@ -27,6 +28,7 @@ pub struct NewEntry {
   pub buyer: i32,
 }
 
+#[derive(Clone)]
 #[derive(Queryable)]
 pub struct Company {
   pub id: i32,
@@ -70,6 +72,15 @@ pub struct Dividend {
   pub announcement_date: NaiveDate,
   pub exdividend_date: NaiveDate,
   pub payment: f64,
+}
+
+#[derive(Queryable)]
+#[derive(Insertable)]
+#[table_name="projected_dividend"]
+pub struct ProjectedDividend {
+  pub company: i32,
+  pub index: f64,
+  pub value_date: NaiveDate,
 }
 
 #[derive(Queryable)]

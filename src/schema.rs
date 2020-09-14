@@ -55,11 +55,20 @@ table! {
     }
 }
 
+table! {
+    projected_dividend (company, value_date) {
+        company -> Int4,
+        index -> Float8,
+        value_date -> Date,
+    }
+}
+
 joinable!(dividend -> company (company));
 joinable!(industry_map -> company (company));
 joinable!(industry_map -> industry (industry));
 joinable!(industry_value -> industry (industry));
 joinable!(ledger -> company (company));
+joinable!(projected_dividend -> company (company));
 
 allow_tables_to_appear_in_same_query!(
     company,
@@ -68,4 +77,5 @@ allow_tables_to_appear_in_same_query!(
     industry_map,
     industry_value,
     ledger,
+    projected_dividend,
 );

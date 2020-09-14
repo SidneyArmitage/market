@@ -6,7 +6,6 @@ use std::env;
 pub mod company;
 pub mod industry;
 pub mod ledger;
-pub mod dividend;
 
 pub fn establish_connection() -> PgConnection {
   dotenv().ok();
