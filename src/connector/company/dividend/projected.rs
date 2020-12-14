@@ -26,3 +26,7 @@ pub fn fetch(conn: &PgConnection, id: i32, day: NaiveDate) -> ProjectedDividend 
     .first::<ProjectedDividend>(conn)
     .expect("Unable to find value");
 }
+
+pub fn clear(conn: &PgConnection) {
+  diesel::delete(projected_dividend::dsl::projected_dividend).execute(conn).expect("Unable to clear projection");
+}

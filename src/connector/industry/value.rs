@@ -33,3 +33,8 @@ pub fn fetch_from_date (conn: &PgConnection, day: NaiveDate) -> std::vec::Vec<In
     .load::<IndustryValue>(conn)
     .expect("unable to fetch date");
 }
+
+pub fn clear(conn: &PgConnection) {
+  use super::super::super::schema::industry_value::dsl::*;
+  diesel::delete(industry_value).execute(conn).expect("Unable to clear value");
+}

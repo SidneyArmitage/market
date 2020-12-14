@@ -1,6 +1,5 @@
 extern crate market;
 extern crate diesel;
-extern crate rand;
 
 
 use market::initialize::companies;

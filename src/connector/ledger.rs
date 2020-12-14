@@ -20,3 +20,7 @@ pub fn create (conn: &PgConnection, company: i32, is_buy: bool, price: Cents, qu
     .get_result(conn)
     .expect("Error saving new entry");
 }
+
+pub fn clear(conn: &PgConnection) {
+  diesel::delete(ledger::dsl::ledger).execute(conn).expect("Unable to clear ledger table");
+}

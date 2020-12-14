@@ -15,3 +15,9 @@ pub fn establish_connection() -> PgConnection {
   return PgConnection::establish(&database_url)
     .expect(&format!("Error connecting to {}", database_url));
 }
+
+pub fn clear(conn: &PgConnection) {
+  company::clear(conn);
+  industry::clear(conn);
+  ledger::clear(conn);
+}

@@ -26,3 +26,8 @@ pub fn fetch_from_company(conn: &PgConnection, id: i32) -> std::vec::Vec<Industr
     .load::<IndustryMap>(conn)
     .expect("unable to fetch industry");
 }
+
+pub fn clear(conn: &PgConnection) {
+  use super::super::super::schema::industry_map::dsl::*;
+  diesel::delete(industry_map).execute(conn).expect("Unable to clear map");
+}

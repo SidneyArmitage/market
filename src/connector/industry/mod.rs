@@ -23,11 +23,11 @@ pub fn create (conn: &PgConnection, name: String, beta: f64, stdev: f64) -> Indu
 }
 
 
-pub fn clear (conn: &PgConnection) {
-  diesel::delete(industry::table)
-    .execute(conn)
-    .expect("Error clearing industry");
-}
+// pub fn clear (conn: &PgConnection) {
+//   diesel::delete(industry::table)
+//     .execute(conn)
+//     .expect("Error clearing industry");
+// }
 
 pub fn fetch_all (conn: &PgConnection) -> std::vec::Vec<Industry> {
   use super::super::schema::industry::dsl::*;
@@ -41,4 +41,10 @@ pub fn fetch_total (conn: &PgConnection) -> Industry {
   return industry.filter(name.eq("Total Market"))
     .first::<Industry>(conn)
     .expect("Unable to find market");
+}
+
+pub fn clear(conn: &PgConnection) {
+  map::clear(conn);
+  value::clear(conn);
+  diesel::delete(industry::dsl::industry).execute(conn).expect("Unable to clear industry");
 }

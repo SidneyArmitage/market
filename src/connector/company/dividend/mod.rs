@@ -38,3 +38,9 @@ pub fn update(conn: &PgConnection, id: i32, day: NaiveDate, value: f64) {
     .execute(conn)
     .expect("failed to update");
 }
+
+pub fn clear(conn: &PgConnection) {
+  use super::super::super::schema::dividend::dsl::*;
+  projected::clear(conn);
+  diesel::delete(dividend).execute(conn).expect("Unable to clear dividends");
+}
