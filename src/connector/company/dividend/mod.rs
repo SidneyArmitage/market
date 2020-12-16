@@ -42,5 +42,5 @@ pub fn update(conn: &PgConnection, id: i32, day: NaiveDate, value: f64) {
 pub fn clear(conn: &PgConnection) {
   use super::super::super::schema::dividend::dsl::*;
   projected::clear(conn);
-  diesel::delete(dividend).execute(conn).expect("Unable to clear dividends");
+  println!("cleared {} from dividend", diesel::delete(dividend).execute(conn).expect("Unable to clear dividend"));
 }

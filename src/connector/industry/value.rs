@@ -36,5 +36,5 @@ pub fn fetch_from_date (conn: &PgConnection, day: NaiveDate) -> std::vec::Vec<In
 
 pub fn clear(conn: &PgConnection) {
   use super::super::super::schema::industry_value::dsl::*;
-  diesel::delete(industry_value).execute(conn).expect("Unable to clear value");
+  println!("cleared {} from value", diesel::delete(industry_value).execute(conn).expect("Unable to clear value"));
 }

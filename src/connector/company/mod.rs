@@ -62,5 +62,5 @@ pub fn fetch_all(conn: &PgConnection) -> CompanyIteratable {
 
 pub fn clear(conn: &PgConnection) {
   dividend::clear(conn);
-  diesel::delete(company::dsl::company).execute(conn).expect("Unable to clear companies");
+  println!("cleared {} from company", diesel::delete(company::dsl::company).execute(conn).expect("Unable to clear companies"));
 }

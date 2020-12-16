@@ -46,5 +46,5 @@ pub fn fetch_total (conn: &PgConnection) -> Industry {
 pub fn clear(conn: &PgConnection) {
   map::clear(conn);
   value::clear(conn);
-  diesel::delete(industry::dsl::industry).execute(conn).expect("Unable to clear industry");
+  println!("cleared {} from industry", diesel::delete(industry::dsl::industry).execute(conn).expect("Unable to clear industry"));
 }

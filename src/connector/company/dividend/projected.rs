@@ -28,5 +28,5 @@ pub fn fetch(conn: &PgConnection, id: i32, day: NaiveDate) -> ProjectedDividend 
 }
 
 pub fn clear(conn: &PgConnection) {
-  diesel::delete(projected_dividend::dsl::projected_dividend).execute(conn).expect("Unable to clear projection");
+  println!("cleared {} from projected dividend", diesel::delete(projected_dividend::dsl::projected_dividend).execute(conn).expect("Unable to clear projected dividend"));
 }

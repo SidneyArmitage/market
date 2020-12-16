@@ -17,7 +17,7 @@ pub fn establish_connection() -> PgConnection {
 }
 
 pub fn clear(conn: &PgConnection) {
-  company::clear(conn);
   industry::clear(conn);
+  company::clear(conn);
   ledger::clear(conn);
 }

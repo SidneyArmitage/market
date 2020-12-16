@@ -3,6 +3,7 @@ use diesel::pg::PgConnection;
 use std::{fs, env};
 use chrono::NaiveDate;
 use rand::Rng;
+use super::model::IndustryMap;
 
 use super::connector::industry;
 use super::connector::company;
@@ -20,7 +21,7 @@ pub fn industries(conn: &PgConnection) {
   for line in lines {
       let elements: Vec<&str> = line.split("\t").collect();
       let zero = NaiveDate::from_num_days_from_ce(0);
-      println!("{}", line);
+      print!("{}\r", line);
       let name = String::from(elements[0]);
       let beta = elements[1].parse::<f64>().unwrap();
       let stdev = elements[2].parse::<f64>().unwrap();
@@ -39,10 +40,12 @@ pub fn companies(conn: &PgConnection) {
   let close = 3.090;
   let deviation = 0.5 / close;
   let zero = NaiveDate::from_num_days_from_ce(0);
+  let mut company_map = Vec::new();
   // split companies between each industry
   for x in 65u8..90u8 {
     for y in 65u8..90u8 {
       for z in 65u8..90u8 {
+        print!("initialized company {}{}{}\r", x as char, y as char, z as char);
         let initial_dividend = NaiveDate::from_num_days_from_ce(rng.gen_range(0, 365));
         let current = company::create(conn, format!("{}{}{}", x as char, y as char, z as char), rng.gen_range(100_000, 100_000_000), gaussian.generate(1.0, 0.25), initial_dividend);
         // initial dividend
@@ -61,9 +64,15 @@ pub fn companies(conn: &PgConnection) {
         for i in 0..amount {
           let beta = gaussian.generate(1.04, 0.1);
           // could be removed for optimisation
-          let weight = weights.get(i).expect("Missing weight") / sum;
-          industry::map::create(conn, industries.get(i).expect("Missing Industry").id, current.id, beta, weight);
+          company_map.push(IndustryMap {
+            industry: industries.get(i).expect("Missing Industry").id,
+            company: current.id,
+            beta: beta,
+            weight: weights.get(i).expect("Missing weight") / sum,
+          });
         }
+        industry::map::create(conn, &company_map);
+        company_map.clear();
       }
     }
   }

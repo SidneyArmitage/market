@@ -22,5 +22,5 @@ pub fn create (conn: &PgConnection, company: i32, is_buy: bool, price: Cents, qu
 }
 
 pub fn clear(conn: &PgConnection) {
-  diesel::delete(ledger::dsl::ledger).execute(conn).expect("Unable to clear ledger table");
+  println!("cleared {} from ledger", diesel::delete(ledger::dsl::ledger).execute(conn).expect("Unable to clear ledger table"));
 }
